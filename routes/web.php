@@ -16,6 +16,8 @@ Route::view('profile', 'profile')
 Route::middleware(['auth'])->group(function () {
     Route::get('/boards', [BoardController::class, 'index'])
         ->name('boards.index');
+    Route::get('/boards/{board}', [BoardController::class, 'show'])
+        ->name('boards.show');
 });
 
 require __DIR__.'/auth.php';

@@ -5,8 +5,8 @@
             <p class="text-gray-500 text-sm mt-2">{{ $board->description }}</p>
 
             <div class="mt-4 flex justify-between items-center">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 font-medium">
-                    Open Board →
+                <a href="{{ route('boards.show', $board->id) }}" wire:navigate class="text-indigo-600 hover:text-indigo-900 font-medium">
+                     Open Board →
                 </a>
                 <span class="text-xs text-gray-400">
                     Created {{ $board->created_at->diffForHumans() }}

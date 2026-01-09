@@ -38,7 +38,11 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
+       if ($board->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        return view('boards.show', compact('board'));
     }
 
     /**

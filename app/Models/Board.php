@@ -18,4 +18,9 @@ class Board extends Model
     {
         return LogOptions::defaults()->logAll();
     }
+
+    public function lists()
+    {
+        return $this->hasMany(BoardList::class)->orderBy('position');
+    }
 }
