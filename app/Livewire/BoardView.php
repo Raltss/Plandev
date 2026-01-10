@@ -12,10 +12,14 @@ class BoardView extends Component
     public $board;
     public $showListModal = false;
     public $showCardModal = false;
+    public $showDeleteModal = false;
+    public $listToDelete = null;
     public $listTitle = '';
     public $cardTitle = '';
     public $cardDescription = '';
     public $selectedListId = null;
+    public $editingListId = null;
+    public $editingListTitle = '';
 
     public function mount(Board $board)
     {
@@ -70,5 +74,45 @@ class BoardView extends Component
         return view('livewire.board-view', [
             'lists' => $this->board->lists()->with('cards')->get()
         ]);
+    }
+
+    public function startEditingList($listId, $currentTitle)
+    {
+        $this->editingListId = $listId;
+        $this->editingListTitle = $currentTitle;
+    }
+
+    public function updateList()
+    {
+        $this->validate([
+            'editingListTitle' => 'required|min:1|max:255',
+        ]);
+
+        $list = BoardList::find($this->editingListId);
+        $list->update(['title' => $this->editingListTitle]);
+
+        $this->editingListId = null;
+        $this->editingListTitle = '';
+    }
+
+    public function cancelEditList()
+    {
+        $this->editingListId = null;
+        $this->editingListTitle = '';
+    }
+
+    public function deleteList()
+    {
+        if ($this->listToDelete) {
+            BoardList::find($this->listToDelete)->delete();
+            $this->listToDelete = null;
+            $this->showDeleteModal = false;
+        }
+    }
+
+    public function deleteCardModal($listId)
+    {
+        $this->listToDelete = $listId;
+        $this->showDeleteModal = true;
     }
 }
