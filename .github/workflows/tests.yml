@@ -56,7 +56,7 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ':memory:'
 
-      # 🎉 Discord notification on SUCCESS
+      # Discord notification on SUCCESS
       - name: Discord Success Notification
         if: success()
         uses: sarisia/actions-status-discord@v1
@@ -69,7 +69,7 @@ jobs:
           username: GitHub Actions
           avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
 
-      # 🚨 Discord notification on FAILURE
+      # Discord notification on FAILURE
       - name: Discord Failure Notification
         if: failure()
         uses: sarisia/actions-status-discord@v1
