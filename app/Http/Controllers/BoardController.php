@@ -13,8 +13,9 @@ class BoardController extends Controller
      */
     public function index()
     {
-       $boards = Board::where('user_id', Auth::id())->get();;
-       return view('boards.index', compact('boards'));
+        $boards = Board::where('user_id', Auth::id())->get();
+
+        return view('boards.index', compact('boards'));
     }
 
     /**
@@ -38,7 +39,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-       if ($board->user_id !== auth()->id()) {
+        if ($board->user_id !== auth()->id()) {
             abort(403);
         }
 

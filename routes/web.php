@@ -1,6 +1,7 @@
 <?php
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\BoardController;
+use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
@@ -25,6 +26,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/boards/{board}', [BoardController::class, 'show'])
         ->name('boards.show');
 });
-
 
 require __DIR__.'/auth.php';

@@ -2,13 +2,15 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Board;
+use Livewire\Component;
 
 class CreateBoardModal extends Component
 {
     public $isOpen = false;
+
     public $title = '';
+
     public $description = '';
 
     protected $listeners = ['openCreateModal' => 'openModal'];

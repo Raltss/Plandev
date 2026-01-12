@@ -88,7 +88,7 @@ return array(
     'Laravel\\Pail\\' => array($vendorDir . '/laravel/pail/src'),
     'Laravel\\Fortify\\' => array($vendorDir . '/laravel/fortify/src'),
     'Laravel\\Breeze\\' => array($vendorDir . '/laravel/breeze/src'),
-    'Larastan\\Larastan\\' => array($vendorDir . '/nunomaduro/larastan/src'),
+    'Larastan\\Larastan\\' => array($vendorDir . '/larastan/larastan/src'),
     'Jean85\\' => array($vendorDir . '/jean85/pretty-package-versions/src'),
     'Illuminate\\Support\\' => array($vendorDir . '/laravel/framework/src/Illuminate/Macroable', $vendorDir . '/laravel/framework/src/Illuminate/Collections', $vendorDir . '/laravel/framework/src/Illuminate/Conditionable', $vendorDir . '/laravel/framework/src/Illuminate/Reflection'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
