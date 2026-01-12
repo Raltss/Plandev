@@ -115,4 +115,21 @@ class BoardView extends Component
         $this->listToDelete = $listId;
         $this->showDeleteModal = true;
     }
+    
+    public function updateListOrder($orderedIds)
+    {
+        foreach ($orderedIds as $index => $id) {
+            BoardList::where('id', $id)->update(['position' => $index]);
+        }
+    
+        }
+    public function updateCardOrder($listId, $orderedIds)
+    {
+        foreach ($orderedIds as $index => $id) {
+            Card::where('id', $id)->update([
+                'position' => $index,
+                'board_list_id' => $listId
+            ]);
+        }
+    }
 }
