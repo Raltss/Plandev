@@ -12,7 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class User extends Authenticatable
 {
     // echo "// Testing CI" 
-    // Trello lite website for personal project, hope this succeedsaaaaaaaaa.
+    // Trello lite website for personal project, hope this succeeds.
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
