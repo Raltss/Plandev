@@ -52,3 +52,32 @@ jobs:
 
       - name: Run Tests
         run: ./vendor/bin/pest
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+
+      # 🎉 Discord notification on SUCCESS
+      - name: Discord Success Notification
+        if: success()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "✅ Tests Passed!"
+          description: "All tests are passing on ${{ github.ref_name }}"
+          color: 0x00ff00
+          username: GitHub Actions
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+
+      # 🚨 Discord notification on FAILURE
+      - name: Discord Failure Notification
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "❌ Tests Failed!"
+          description: "Tests failed on ${{ github.ref_name }}\n[View logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          color: 0xff0000
+          username: GitHub Actions
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
