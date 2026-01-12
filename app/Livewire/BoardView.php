@@ -2,23 +2,33 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Board;
 use App\Models\BoardList;
 use App\Models\Card;
+use Livewire\Component;
 
 class BoardView extends Component
 {
     public $board;
+
     public $showListModal = false;
+
     public $showCardModal = false;
+
     public $showDeleteModal = false;
+
     public $listToDelete = null;
+
     public $listTitle = '';
+
     public $cardTitle = '';
+
     public $cardDescription = '';
+
     public $selectedListId = null;
+
     public $editingListId = null;
+
     public $editingListTitle = '';
 
     public function mount(Board $board)
@@ -72,7 +82,7 @@ class BoardView extends Component
     public function render()
     {
         return view('livewire.board-view', [
-            'lists' => $this->board->lists()->with('cards')->get()
+            'lists' => $this->board->lists()->with('cards')->get(),
         ]);
     }
 
@@ -115,20 +125,21 @@ class BoardView extends Component
         $this->listToDelete = $listId;
         $this->showDeleteModal = true;
     }
-    
+
     public function updateListOrder($orderedIds)
     {
         foreach ($orderedIds as $index => $id) {
             BoardList::where('id', $id)->update(['position' => $index]);
         }
-    
-        }
+
+    }
+
     public function updateCardOrder($listId, $orderedIds)
     {
         foreach ($orderedIds as $index => $id) {
             Card::where('id', $id)->update([
                 'position' => $index,
-                'board_list_id' => $listId
+                'board_list_id' => $listId,
             ]);
         }
     }
