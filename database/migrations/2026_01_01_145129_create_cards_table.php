@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('board_list_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->date('due_date')->nullable();
             $table->integer('position')->default(0); // For ordering cards within a list
             $table->timestamps();
         });

@@ -94,10 +94,21 @@
                     }"
                     class="mb-4 {{ count($list->cards) > 0 ? 'space-y-2' : '' }}">
                     @foreach($list->cards as $card)
-                        <div data-card-id="{{ $card->id }}" class="bg-white p-3 rounded shadow-sm hover:shadow-md transition cursor-move">
+                        <div 
+                            data-card-id="{{ $card->id }}" 
+                            wire:click="openEditCardModal({{ $card->id }})"
+                            class="bg-white p-3 rounded shadow-sm hover:shadow-md transition cursor-pointer">
                             <h4 class="font-medium">{{ $card->title }}</h4>
                             @if($card->description)
                                 <p class="text-sm text-gray-600 mt-1">{{ $card->description }}</p>
+                            @endif
+                            @if($card->due_date)
+                                <div class="flex items-center gap-1 mt-2 text-xs text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    {{ \Carbon\Carbon::parse($card->due_date)->format('M d, Y') }}
+                                </p>
                             @endif
                         </div>
                     @endforeach
@@ -176,6 +187,15 @@
                             class="w-full border rounded-md px-3 py-2"
                             placeholder="Enter card description"></textarea>
                     </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Due Date (optional)</label>
+                        <input 
+                            type="date" 
+                            wire:model="cardDueDate"
+                            class="w-full border rounded-md px-3 py-2">
+                        @error('cardDueDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
                     
                     <div class="flex gap-2 justify-end">
                         <button 
@@ -213,6 +233,105 @@
                         wire:click="deleteList"
                         class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                         Yes, Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Edit Card Modal -->
+    @if($showEditCardModal)
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold">Edit Card</h3>
+                    <button 
+                        wire:click="$set('showEditCardModal', false)"
+                        class="text-gray-500 hover:text-gray-700">
+                        ✕
+                    </button>
+                </div>
+                
+                <form wire:submit="updateCard">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Title</label>
+                        <input 
+                            type="text" 
+                            wire:model="editingCardTitle"
+                            class="w-full border rounded-md px-3 py-2"
+                            placeholder="Enter card title">
+                        @error('editingCardTitle') 
+                            <span class="text-red-500 text-sm">{{ $message }}</span> 
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Description</label>
+                        <textarea 
+                            wire:model="editingCardDescription"
+                            rows="4"
+                            class="w-full border rounded-md px-3 py-2"
+                            placeholder="Enter card description"></textarea>
+                        @error('editingCardDescription') 
+                            <span class="text-red-500 text-sm">{{ $message }}</span> 
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Due Date (optional)</label>
+                        <input 
+                            type="date" 
+                            wire:model="editingCardDueDate"
+                            class="w-full border rounded-md px-3 py-2">
+                        @error('editingCardDueDate') 
+                            <span class="text-red-500 text-sm">{{ $message }}</span> 
+                        @enderror
+                    </div>
+                    
+                    <div class="flex gap-2 justify-between">
+                        <button 
+                            type="button"
+                            wire:click="openDeleteCardModal({{ $editingCardId }})"
+                            class="px-4 py-2 text-red-600 hover:bg-red-50 rounded-md">
+                            Delete Card
+                        </button>
+                        <div class="flex gap-2">
+                            <button 
+                                type="button"
+                                wire:click="$set('showEditCardModal', false)"
+                                class="px-4 py-2 border rounded-md">
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit"
+                                class="px-4 py-2 bg-black text-white rounded-md">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+
+    <!-- Delete Card Modal -->
+    @if($showDeleteCardModal)
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 class="text-xl font-semibold mb-4">Delete Card?</h3>
+                <p class="text-gray-600 mb-6">Are you sure you want to delete this card? This action cannot be undone.</p>
+                            
+                <div class="flex gap-2 justify-end">
+                    <button 
+                        type="button"
+                        wire:click="$set('showDeleteCardModal', false)"
+                        class="px-4 py-2 border rounded-md">
+                        Cancel
+                    </button>
+                    <button 
+                        wire:click="deleteCard"
+                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                        Delete
                     </button>
                 </div>
             </div>

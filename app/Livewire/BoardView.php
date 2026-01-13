@@ -31,6 +31,20 @@ class BoardView extends Component
 
     public $editingListTitle = '';
 
+    public $showEditCardModal = false;
+
+    public $showDeleteCardModal = false;
+
+    public $editingCardId = null;
+
+    public $editingCardTitle = '';
+
+    public $editingCardDescription = '';
+
+    public $cardToDelete = null;
+
+    public $editingCardDueDate = null;
+
     public function mount(Board $board)
     {
         $this->board = $board;
@@ -141,6 +155,49 @@ class BoardView extends Component
                 'position' => $index,
                 'board_list_id' => $listId,
             ]);
+        }
+    }
+
+    public function openEditCardModal($cardId)
+    {
+        $card = Card::find($cardId);
+        $this->editingCardId = $cardId;
+        $this->editingCardTitle = $card->title;
+        $this->editingCardDescription = $card->description ?? '';
+        $this->editingCardDueDate = $card->due_date ? $card->due_date->format('Y-m-d') : '';
+        $this->showEditCardModal = true;
+    }
+
+    public function updateCard()
+    {
+        $this->validate([
+            'editingCardTitle' => 'required|min:1|max:255',
+            'editingCardDescription' => 'nullable|max:1000',
+            'editingCardDueDate' => 'nullable|date',
+        ]);
+
+        Card::find($this->editingCardId)->update([
+            'title' => $this->editingCardTitle,
+            'description' => $this->editingCardDescription,
+            'due_date' => $this->editingCardDueDate,
+        ]);
+
+        $this->showEditCardModal = false;
+        $this->reset(['editingCardId', 'editingCardTitle', 'editingCardDescription']);
+    }
+
+    public function openDeleteCardModal($cardId)
+    {
+        $this->cardToDelete = $cardId;
+        $this->showDeleteCardModal = true;
+    }
+
+    public function deleteCard()
+    {
+        if ($this->cardToDelete) {
+            Card::find($this->cardToDelete)->delete();
+            $this->cardToDelete = null;
+            $this->showDeleteCardModal = false;
         }
     }
 }
