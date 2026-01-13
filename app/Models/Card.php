@@ -11,6 +11,7 @@ class Card extends Model
     protected $casts = [
         'due_date' => 'datetime',
     ];
+
     public function boardList()
     {
         return $this->belongsTo(BoardList::class);

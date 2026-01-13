@@ -32,11 +32,17 @@ class BoardView extends Component
     public $editingListTitle = '';
 
     public $showEditCardModal = false;
+
     public $showDeleteCardModal = false;
+
     public $editingCardId = null;
+
     public $editingCardTitle = '';
+
     public $editingCardDescription = '';
+
     public $cardToDelete = null;
+
     public $editingCardDueDate = null;
 
     public function mount(Board $board)
