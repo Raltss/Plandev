@@ -23,7 +23,7 @@ Route::middleware(['auth'])->prefix('settings')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/boards', [BoardController::class, 'index'])
-        ->name('boards.index'); 
+        ->name('boards.index');
     Route::get('/boards/{board}', [BoardController::class, 'show'])
         ->name('boards.show');
 });
