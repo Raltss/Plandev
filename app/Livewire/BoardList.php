@@ -12,7 +12,7 @@ class BoardList extends Component
     public function render()
     {
         return view('livewire.board-list', [
-            'boards' => Board::latest()->get(),
+            'boards' => Board::where('user_id', auth()->id())->get()
         ]);
     }
 }

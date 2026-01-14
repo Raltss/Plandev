@@ -29,24 +29,15 @@
                     <main class="mt-6">
                         <section class="grid grid-cols-2 border border-white rounded-xl min-h-[200px] md:min-h-[300px] lg:min-h-[350px]">
                             <div class="flex-row px-6">
-                                <h1 class="text-white font-bold py-16 text-2xl md:text-3xl lg:text-4xl"> 
+                                <h1 class="text-white font-bold py-9 text-2xl md:text-4xl lg:text-5xl"> 
                                     Organize Your Work, Your Way
                                 </h1>
-                                <p class="text-xs md:text-sm lg:text-lg"> 
+                                <p class="text-sm md:text-md lg:text-xl"> 
                                     Manage projects with boards, lists, and cards. Simple, visual, and powerful.
                                 </p>
-                                <div class="flex flex-wrap my-20 gap-4">
-                                    <a href="{{ route('register') }}" class="flex-1 p-2 md:p-3 bg-white rounded-md text-center"> 
-                                        <p class="text-black font-semibold text-sm sm:text-base md:text-lg">Register</p>
-                                    </a>
-                                    
-                                    <a href="{{ route('login') }}" class="flex-1 p-2 md:p-3 bg-black rounded-md border border-white text-center">
-                                        <p class="text-white font-semibold text-sm sm:text-base md:text-lg">Log In</p>
-                                    </a>
-                                </div>
                             </div>
 
-                            <div class="flex items-center justify-center border-l border-white p-1">
+                            <div class="flex items-center justify-center border-l border-white p-8">
                                 <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&auto=format&fit=crop" 
                                     alt="Project Board Preview" 
                                     class="w-full h-auto rounded-lg shadow-xl">
@@ -54,7 +45,7 @@
                         </section>
                     </main>
 
-                    <footer class="py-7  text-center text-sm text-black dark:text-white/70">
+                    <footer class="py-7 text-center text-sm text-black dark:text-white/70">
                         Plandev © 2026
                     </footer>
                 </div>
