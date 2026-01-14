@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Board;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CreateBoardModal extends Component
@@ -36,7 +37,7 @@ class CreateBoardModal extends Component
         Board::create([
             'title' => $this->title,
             'description' => $this->description,
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ]);
 
         $this->dispatch('boardCreated');

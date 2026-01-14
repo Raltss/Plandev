@@ -21,9 +21,9 @@
         class="flex items-start gap-4 overflow-x-auto pb-4">
         
         @foreach($lists as $list)
-            <div data-list-id="{{ $list->id }}" class="sortable-list bg-gray-100 rounded-lg p-4 min-w-[300px] max-w-[300px] flex-shrink-0">
+            <div data-list-id="{{ $list->id }}" class="sortable-list bg-gray-100 rounded-lg p-4 min-w-[300px] max-w-[300px] flex-shrink-0 flex flex-col max-h-[calc(82vh-150px)]">
                 <!-- List Header with drag handle -->
-                <div class="list-header mb-4 cursor-move">
+                <div class="list-header mb-4 cursor-move flex-shrink-0">
                     @if($editingListId === $list->id)
                         <!-- Edit Mode -->
                         <form wire:submit="updateList" class="flex gap-2">
@@ -44,9 +44,9 @@
                         </form>
                     @else
                         <!-- View Mode -->
-                        <div class="flex justify-between items-center">
-                            <h3 class="font-semibold text-lg">{{ $list->title }}</h3>
-                            <div x-data="{ open: false }" class="relative">
+                        <div class="flex justify-between items-start gap-2">
+                            <h3 class="font-semibold text-lg break-words flex-1 min-w-0">{{ $list->title }}</h3>
+                            <div x-data="{ open: false }" class="relative flex-shrink-0">
                                 <button @click="open = !open" class="text-gray-500 hover:text-gray-700 p-1">
                                     ⋯
                                 </button>
@@ -92,16 +92,13 @@
                             });
                         }
                     }"
-                    class="mb-4 {{ count($list->cards) > 0 ? 'space-y-2' : '' }}">
+                    class=" overflow-y-auto flex-1 mb-4 {{ count($list->cards) > 0 ? 'space-y-2' : '' }}">
                     @foreach($list->cards as $card)
                         <div 
                             data-card-id="{{ $card->id }}" 
                             wire:click="openEditCardModal({{ $card->id }})"
                             class="bg-white p-3 rounded shadow-sm hover:shadow-md transition cursor-pointer">
-                            <h4 class="font-medium">{{ $card->title }}</h4>
-                            @if($card->description)
-                                <p class="text-sm text-gray-600 mt-1">{{ $card->description }}</p>
-                            @endif
+                            <h4 class="font-medium truncate">{{ $card->title }}</h4>
                             @if($card->due_date)
                                 <div class="flex items-center gap-1 mt-2 text-xs text-gray-500">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +113,7 @@
 
                 <button 
                     wire:click="openCardModal({{ $list->id }})"
-                    class="w-full text-left text-gray-600 hover:bg-gray-200 p-2 rounded">
+                    class="w-full text-left text-gray-600 hover:bg-gray-200 p-2 rounded flex-shrink-0">
                     + Add a card
                 </button>
             </div>
